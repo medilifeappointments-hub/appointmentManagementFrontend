@@ -39,7 +39,9 @@ const muted = (value: string | null) =>
 const money = (value: string | null) => (value === null ? muted(null) : formatMoney(value));
 
 const numeric = { fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" } as const;
-const desktopTableMinWidth = 2200;
+// Fits inside a typical large desktop content area after the sidebar, while
+// remaining wide enough to keep every business column readable.
+const desktopTableMinWidth = 1560;
 
 /** Columns in spreadsheet order. */
 function buildColumns(timeZone: string): Column[] {
@@ -118,7 +120,11 @@ export function AppointmentTable({ rows, timeZone, sortBy, sortOrder, onSort, on
         stickyHeader
         size="small"
         aria-label="Appointments"
-        sx={{ width: "100%", minWidth: desktopTableMinWidth }}
+        sx={{
+          width: "100%",
+          minWidth: desktopTableMinWidth,
+          "& .MuiTableCell-root": { px: 1 },
+        }}
       >
         <TableHead>
           <TableRow>
