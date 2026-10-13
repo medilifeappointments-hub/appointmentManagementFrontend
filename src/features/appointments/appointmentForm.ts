@@ -170,6 +170,9 @@ export function validateAppointmentForm(values: AppointmentFormValues, earliestA
     if (!values.cashAmount) errors.cashAmount = "Cash Amount is required for a split payment.";
     if (!values.cardAmount) errors.cardAmount = "Card Amount is required for a split payment.";
   }
+  if (values.paymentMethod && !values.amount) {
+    errors.amount = "Amount is required when a payment method is selected.";
+  }
   if (values.paymentMethod && values.amount && !errors.amount && !errors.cashAmount && !errors.cardAmount) {
     const cents = (value: string) => Math.round(Number(value || 0) * 100);
     if (cents(values.cashAmount) + cents(values.cardAmount) !== cents(values.amount)) {

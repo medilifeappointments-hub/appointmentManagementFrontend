@@ -28,6 +28,8 @@ interface RecordedTotals {
   costEntries: number;
   recordedCash: string;
   recordedCard: string;
+  recordedCollected: string;
+  recordedOutstanding: string;
 }
 
 interface SummaryReport {
@@ -72,9 +74,13 @@ function BreakdownTable({ title, labelHeader, rows }: { title: string; labelHead
             <TableHead>
               <TableRow>
                 <TableCell>{labelHeader}</TableCell>
-                <TableCell align="right">Records</TableCell>
-                <TableCell align="right">Recorded Amount</TableCell>
-                <TableCell align="right">Recorded Cost</TableCell>
+                <TableCell align="right">Appointments</TableCell>
+                <TableCell align="right">Amount</TableCell>
+                <TableCell align="right">Cash</TableCell>
+                <TableCell align="right">Card</TableCell>
+                <TableCell align="right">Collected</TableCell>
+                <TableCell align="right">Outstanding</TableCell>
+                <TableCell align="right">Cost</TableCell>
                 <TableCell align="right">Net</TableCell>
               </TableRow>
             </TableHead>
@@ -87,6 +93,18 @@ function BreakdownTable({ title, labelHeader, rows }: { title: string; labelHead
                   </TableCell>
                   <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
                     {formatMoney(row.recordedAmount)}
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
+                    {formatMoney(row.recordedCash)}
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
+                    {formatMoney(row.recordedCard)}
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
+                    {formatMoney(row.recordedCollected)}
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
+                    {formatMoney(row.recordedOutstanding)}
                   </TableCell>
                   <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
                     {formatMoney(row.recordedCost)}
@@ -121,8 +139,8 @@ export function DashboardPage() {
       </Card>
 
       <Alert severity="info" sx={{ mb: 2 }}>
-        Totals are sums of the values staff entered and exclude blank (unknown) amounts and costs. They are recorded
-        figures, not confirmed collections, and archived records are not included.
+        Amount is the appointment charge. Collected is Cash plus Card. Outstanding is Amount minus Collected. Net is
+        Amount minus Cost. Blank values and archived appointments are excluded.
       </Alert>
 
       <Box sx={{ height: 4, mb: 1 }}>{report.isFetching && <LinearProgress aria-label="Loading report" />}</Box>
@@ -134,32 +152,48 @@ export function DashboardPage() {
       ) : !data ? null : (
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-            <StatCard label="Total active records" value={data.totals.records} icon={<EventAvailableRounded />} caption="Archived records are not counted" />
+            <StatCard label="Appointments" value={data.totals.records} icon={<EventAvailableRounded />} caption="Active appointments in the selected period" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <StatCard
-              label="Recorded Amount"
+              label="Total Amount"
               icon={<PaymentsRounded />}
               value={formatMoney(data.totals.recordedAmount)}
-              caption={`From ${data.totals.amountEntries} of ${data.totals.records} records with an amount entered`}
+              caption={`Entered on ${data.totals.amountEntries} of ${data.totals.records} appointments`}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <StatCard
-              label="Recorded Cost"
-              icon={<ReceiptLongRounded />}
-              value={formatMoney(data.totals.recordedCost)}
-              caption={`From ${data.totals.costEntries} of ${data.totals.records} records with a cost entered`}
+              label="Total Collected"
+              icon={<PaymentsRounded />}
+              value={formatMoney(data.totals.recordedCollected)}
+              caption="Cash and card payments combined"
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
-            <StatCard label="Recorded Net" value={formatMoney(data.totals.recordedNet)} icon={<TrendingUpRounded />} caption="Recorded amount minus recorded cost" />
+            <StatCard
+              label="Outstanding"
+              icon={<ReceiptLongRounded />}
+              value={formatMoney(data.totals.recordedOutstanding)}
+              caption="Amount not assigned to cash or card"
+            />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <StatCard label="Cash Collected" value={formatMoney(data.totals.recordedCash)} icon={<PaymentsRounded />} caption="Cash portions recorded for the selected period" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <StatCard label="Card Collected" value={formatMoney(data.totals.recordedCard)} icon={<PaymentsRounded />} caption="Card portions recorded for the selected period" />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
+            <StatCard
+              label="Total Cost"
+              icon={<ReceiptLongRounded />}
+              value={formatMoney(data.totals.recordedCost)}
+              caption={`Entered on ${data.totals.costEntries} of ${data.totals.records} appointments`}
+            />
+          </Grid>
+          <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
+            <StatCard label="Net" value={formatMoney(data.totals.recordedNet)} icon={<TrendingUpRounded />} caption="Total Amount minus Total Cost" />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <StatCard label="Archived records" value={data.archivedRecords} icon={<ArchiveRounded />} caption="Archived during the selected appointment period" />
