@@ -113,7 +113,7 @@ export function AppointmentTable({ rows, timeZone, sortBy, sortOrder, onSort, on
 
   return (
     <TableContainer sx={{ width: "100%", maxWidth: "100%", maxHeight: "calc(100vh - 340px)", overflowX: "auto" }}>
-      <Table stickyHeader size="small" aria-label="Appointments" sx={{ minWidth: 2100 }}>
+      <Table stickyHeader size="small" aria-label="Appointments" sx={{ width: "max-content", minWidth: "100%" }}>
         <TableHead>
           <TableRow>
             {columns.map((column) => (
