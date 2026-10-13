@@ -115,7 +115,29 @@ export function AppointmentTable({ rows, timeZone, sortBy, sortOrder, onSort, on
   const columns = buildColumns(timeZone);
 
   return (
-    <TableContainer sx={{ width: "100%", maxWidth: "100%", maxHeight: "calc(100vh - 340px)", overflowX: "auto" }}>
+    <TableContainer
+      sx={{
+        width: "100%",
+        maxWidth: "100%",
+        maxHeight: "calc(100vh - 340px)",
+        overflow: "auto",
+        scrollbarGutter: "stable",
+        scrollbarWidth: "thin",
+        scrollbarColor: "#94a3b8 #eef2f7",
+        "&::-webkit-scrollbar": { width: 10, height: 10 },
+        "&::-webkit-scrollbar-track": {
+          bgcolor: "#eef2f7",
+          borderRadius: 999,
+        },
+        "&::-webkit-scrollbar-thumb": {
+          bgcolor: "#94a3b8",
+          border: "2px solid #eef2f7",
+          borderRadius: 999,
+        },
+        "&::-webkit-scrollbar-thumb:hover": { bgcolor: "#64748b" },
+        "&::-webkit-scrollbar-corner": { bgcolor: "#eef2f7" },
+      }}
+    >
       <Table
         stickyHeader
         size="small"
