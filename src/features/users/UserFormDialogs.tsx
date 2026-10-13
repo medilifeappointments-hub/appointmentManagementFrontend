@@ -12,7 +12,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { useRef, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { DialogHeader } from "../../components/DialogHeader";
 import { generateTemporaryPassword, PasswordField } from "../../components/PasswordField";
 import { ApiError, errorMessage } from "../../lib/api";
@@ -61,7 +61,6 @@ function fieldErrors(error: unknown): Record<string, string> {
 
 export function CreateUserDialog({ onClose, onCreated }: { onClose: () => void; onCreated: (user: StaffUser) => void }) {
   const create = useCreateUser();
-  const contentRef = useRef<HTMLDivElement>(null);
   const [values, setValues] = useState<{ name: string; email: string; temporaryPassword: string; role: Role }>({
     name: "",
     email: "",
@@ -91,12 +90,11 @@ export function CreateUserDialog({ onClose, onCreated }: { onClose: () => void; 
       maxWidth="sm"
       scroll="paper"
       aria-labelledby="create-user-title"
-      slotProps={{ transition: { onEntered: () => contentRef.current?.scrollTo({ top: 0 }) } }}
     >
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ display: "contents" }}>
         <DialogHeader id="create-user-title" title="Add user" subtitle="They sign in with this email and must change the temporary password." onClose={onClose} closeDisabled={create.isPending} />
-        <DialogContent ref={contentRef} sx={{ pt: 3, scrollPaddingTop: 24 }}>
-          <Stack spacing={2.25}>
+        <DialogContent>
+          <Stack spacing={2.25} sx={{ pt: 1.5 }}>
             {showGeneral && <Alert severity="error">{errorMessage(create.error)}</Alert>}
             <TextField
               label="Full name"
@@ -109,7 +107,7 @@ export function CreateUserDialog({ onClose, onCreated }: { onClose: () => void; 
               }}
               error={Boolean(errors.name)}
               helperText={errors.name}
-              sx={{ ...fieldSx, scrollMarginTop: 24 }}
+              sx={fieldSx}
               slotProps={{
                 htmlInput: { maxLength: 100 },
                 input: {
@@ -188,7 +186,6 @@ export function CreateUserDialog({ onClose, onCreated }: { onClose: () => void; 
 
 export function ResetPasswordDialog({ user, onClose, onDone }: { user: StaffUser; onClose: () => void; onDone: () => void }) {
   const reset = useResetPassword();
-  const contentRef = useRef<HTMLDivElement>(null);
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string>();
 
@@ -213,12 +210,11 @@ export function ResetPasswordDialog({ user, onClose, onDone }: { user: StaffUser
       maxWidth="sm"
       scroll="paper"
       aria-labelledby="reset-title"
-      slotProps={{ transition: { onEntered: () => contentRef.current?.scrollTo({ top: 0 }) } }}
     >
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ display: "contents" }}>
         <DialogHeader id="reset-title" title="Reset password" subtitle={`${user.name} · ${user.email}`} onClose={onClose} closeDisabled={reset.isPending} />
-        <DialogContent ref={contentRef} sx={{ pt: 3, scrollPaddingTop: 24 }}>
-          <Stack spacing={2.25}>
+        <DialogContent>
+          <Stack spacing={2.25} sx={{ pt: 1.5 }}>
             <Alert severity="info">
               {user.name} will be signed out everywhere and must choose a new password after signing in with this
               temporary one.
