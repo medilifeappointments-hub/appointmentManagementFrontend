@@ -84,9 +84,14 @@ export function CreateUserDialog({ onClose, onCreated }: { onClose: () => void; 
 
   return (
     <Dialog open onClose={create.isPending ? undefined : onClose} fullWidth maxWidth="sm" aria-labelledby="create-user-title">
-      <Box component="form" noValidate onSubmit={handleSubmit}>
+      <Box
+        component="form"
+        noValidate
+        onSubmit={handleSubmit}
+        sx={{ display: "flex", flex: "1 1 auto", flexDirection: "column", minHeight: 0, overflow: "hidden" }}
+      >
         <DialogHeader id="create-user-title" title="Add user" subtitle="They sign in with this email and must change the temporary password." onClose={onClose} closeDisabled={create.isPending} />
-        <DialogContent>
+        <DialogContent sx={{ overflowY: "auto" }}>
           <Stack spacing={2.25}>
             {showGeneral && <Alert severity="error">{errorMessage(create.error)}</Alert>}
             <TextField
@@ -198,9 +203,14 @@ export function ResetPasswordDialog({ user, onClose, onDone }: { user: StaffUser
 
   return (
     <Dialog open onClose={reset.isPending ? undefined : onClose} fullWidth maxWidth="sm" aria-labelledby="reset-title">
-      <Box component="form" noValidate onSubmit={handleSubmit}>
+      <Box
+        component="form"
+        noValidate
+        onSubmit={handleSubmit}
+        sx={{ display: "flex", flex: "1 1 auto", flexDirection: "column", minHeight: 0, overflow: "hidden" }}
+      >
         <DialogHeader id="reset-title" title="Reset password" subtitle={`${user.name} · ${user.email}`} onClose={onClose} closeDisabled={reset.isPending} />
-        <DialogContent>
+        <DialogContent sx={{ overflowY: "auto" }}>
           <Stack spacing={2.25}>
             <Alert severity="info">
               {user.name} will be signed out everywhere and must choose a new password after signing in with this
