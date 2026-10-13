@@ -565,9 +565,9 @@ export function AppointmentFormDialog({ appointment, timeZone, onClose }: Appoin
         }}
       />
 
-      <Dialog open={showAddNumber} onClose={() => setShowAddNumber(false)} fullWidth maxWidth="xs">
+      <Dialog open={showAddNumber} onClose={() => setShowAddNumber(false)} fullWidth maxWidth="xs" scroll="paper">
         <DialogHeader id="add-clinic-number-title" title="Add clinic number" onClose={() => setShowAddNumber(false)} />
-        <DialogContent sx={{ pt: 3, overflow: "visible" }}>
+        <DialogContent sx={{ pt: 3 }}>
           <TextField
             autoFocus
             label="Clinic Number"

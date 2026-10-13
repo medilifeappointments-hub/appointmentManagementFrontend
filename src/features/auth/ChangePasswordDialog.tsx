@@ -1,4 +1,4 @@
-import { Alert, Button, CircularProgress, Dialog, DialogActions, DialogContent, Stack } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, Stack } from "@mui/material";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 import { DialogHeader } from "../../components/DialogHeader";
@@ -87,7 +87,7 @@ export function ChangePasswordDialog({ open, onClose }: ChangePasswordDialogProp
       maxWidth="xs"
       aria-labelledby="change-password-title"
     >
-      <Stack component="form" noValidate onSubmit={handleSubmit}>
+      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ display: "contents" }}>
         <DialogHeader
           id="change-password-title"
           title={forced ? "Set a new password" : "Change password"}
@@ -154,7 +154,7 @@ export function ChangePasswordDialog({ open, onClose }: ChangePasswordDialogProp
             Save password
           </Button>
         </DialogActions>
-      </Stack>
+      </Box>
     </Dialog>
   );
 }

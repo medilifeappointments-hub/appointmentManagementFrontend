@@ -137,11 +137,28 @@ export const theme = createTheme({
       styleOverrides: { root: { marginLeft: 2, marginTop: 4, lineHeight: 1.4 } },
     },
     MuiDialog: {
-      styleOverrides: { paper: { borderRadius: 14, boxShadow: "0 24px 48px -12px rgba(15, 23, 42, 0.25)" } },
+      styleOverrides: {
+        paper: {
+          borderRadius: 14,
+          boxShadow: "0 24px 48px -12px rgba(15, 23, 42, 0.25)",
+          maxHeight: "calc(100dvh - 32px)",
+          overflow: "hidden",
+          margin: 16,
+        },
+      },
     },
     MuiDialogTitle: { styleOverrides: { root: { padding: "18px 24px" } } },
     MuiDialogContent: {
-      styleOverrides: { root: { padding: "20px 24px" }, dividers: { borderColor: slate[200] } },
+      styleOverrides: {
+        root: {
+          padding: "20px 24px",
+          minHeight: 0,
+          overflowY: "auto",
+          overscrollBehavior: "contain",
+          WebkitOverflowScrolling: "touch",
+        },
+        dividers: { borderColor: slate[200] },
+      },
     },
     MuiDialogActions: {
       styleOverrides: { root: { padding: "14px 24px", gap: 8, "& > :not(style) ~ :not(style)": { marginLeft: 0 } } },
