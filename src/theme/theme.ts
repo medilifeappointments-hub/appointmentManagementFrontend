@@ -1,25 +1,33 @@
 import { alpha, createTheme } from "@mui/material/styles";
+import { COLORS } from "./colors";
 
 /**
  * Single source of visual truth. Components use palette/typography tokens, never raw colours.
  * Direction: calm clinical UI — light canvas, white surfaces, restrained blue, slate neutrals,
  * soft borders instead of heavy shadows, no gradients.
  */
-const blue = { 50: "#eef4ff", 100: "#dbe7fe", 500: "#2f6fde", 600: "#1f5bc6", 700: "#1a4aa0", 800: "#173d82" };
+const blue = {
+  50: COLORS.secondary.lightblue,
+  100: COLORS.secondary.lightblue,
+  500: COLORS.primary.main,
+  600: COLORS.primary.main,
+  700: COLORS.purple.dark,
+  800: COLORS.purple.main,
+};
 const slate = {
-  50: "#f8fafc",
-  100: "#f1f5f9",
-  200: "#e2e8f0",
-  300: "#cbd5e1",
-  400: "#94a3b8",
-  500: "#64748b",
-  600: "#475569",
-  700: "#334155",
-  900: "#0f172a",
+  50: COLORS.gray.whiteGray,
+  100: COLORS.white.grayWhite,
+  200: COLORS.gray.lightDarkGray,
+  300: COLORS.gray.lightGray,
+  400: COLORS.gray.lightGray,
+  500: COLORS.gray.darkGray,
+  600: COLORS.dark.grayblack,
+  700: COLORS.dark.darkblack,
+  900: COLORS.dark.lightblack,
 };
 
 const focusRing = `0 0 0 3px ${alpha(blue[500], 0.3)}`;
-const softShadow = "0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06)";
+const softShadow = `0 1px 2px ${alpha(COLORS.dark.main, 0.04)}, 0 1px 3px ${alpha(COLORS.dark.main, 0.06)}`;
 
 export const layout = {
   sidebarWidth: 248,
@@ -29,13 +37,13 @@ export const layout = {
 export const theme = createTheme({
   palette: {
     mode: "light",
-    primary: { main: blue[600], light: blue[500], dark: blue[700], contrastText: "#ffffff" },
-    secondary: { main: slate[600] },
-    success: { main: "#15803d", light: "#dcfce7" },
-    warning: { main: "#b45309", light: "#fef3c7" },
-    error: { main: "#dc2626", light: "#fee2e2" },
-    info: { main: "#0369a1", light: "#e0f2fe" },
-    background: { default: slate[50], paper: "#ffffff" },
+    primary: { main: COLORS.primary.main, light: COLORS.purple.light, dark: COLORS.purple.dark, contrastText: COLORS.white.main },
+    secondary: { main: COLORS.secondary.main, light: COLORS.secondary.lightblue },
+    success: { main: COLORS.green.main, light: COLORS.green.lightGreen, dark: COLORS.green.darkGreen },
+    warning: { main: COLORS.orange.main },
+    error: { main: COLORS.red.main },
+    info: { main: COLORS.blue.main, dark: COLORS.blue.bluelight },
+    background: { default: COLORS.gray.main, paper: COLORS.white.main },
     text: { primary: slate[900], secondary: slate[500], disabled: slate[400] },
     divider: slate[200],
     grey: slate,
@@ -108,11 +116,11 @@ export const theme = createTheme({
     MuiAppBar: {
       defaultProps: { elevation: 0, color: "inherit" },
       styleOverrides: {
-        root: { backgroundColor: alpha("#ffffff", 0.92), backdropFilter: "blur(8px)", borderBottom: `1px solid ${slate[200]}` },
+        root: { backgroundColor: alpha(COLORS.white.main, 0.92), backdropFilter: "blur(8px)", borderBottom: `1px solid ${slate[200]}` },
       },
     },
     MuiDrawer: {
-      styleOverrides: { paper: { borderRight: `1px solid ${slate[200]}`, backgroundColor: "#ffffff" } },
+      styleOverrides: { paper: { borderRight: `1px solid ${slate[200]}`, backgroundColor: COLORS.white.main } },
     },
     MuiTextField: { defaultProps: { size: "small", fullWidth: true } },
     MuiFormControl: { defaultProps: { size: "small" } },
@@ -120,7 +128,7 @@ export const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          backgroundColor: "#ffffff",
+          backgroundColor: COLORS.white.main,
           borderRadius: 8,
           "& .MuiOutlinedInput-notchedOutline": { borderColor: slate[300] },
           "&:hover:not(.Mui-disabled):not(.Mui-error) .MuiOutlinedInput-notchedOutline": { borderColor: slate[400] },
@@ -140,7 +148,7 @@ export const theme = createTheme({
       styleOverrides: {
         paper: {
           borderRadius: 14,
-          boxShadow: "0 24px 48px -12px rgba(15, 23, 42, 0.25)",
+          boxShadow: `0 24px 48px -12px ${alpha(COLORS.dark.main, 0.25)}`,
           maxHeight: "calc(100dvh - 32px)",
           overflow: "hidden",
           margin: 16,
@@ -209,7 +217,7 @@ export const theme = createTheme({
       styleOverrides: { tooltip: { backgroundColor: slate[900], fontSize: "0.75rem", fontWeight: 500 }, arrow: { color: slate[900] } },
     },
     MuiMenu: {
-      styleOverrides: { paper: { borderRadius: 10, border: `1px solid ${slate[200]}`, boxShadow: "0 12px 24px -6px rgba(15, 23, 42, 0.15)" } },
+      styleOverrides: { paper: { borderRadius: 10, border: `1px solid ${slate[200]}`, boxShadow: `0 12px 24px -6px ${alpha(COLORS.dark.main, 0.15)}` } },
     },
     MuiMenuItem: {
       styleOverrides: { root: { borderRadius: 6, marginInline: 6, paddingBlock: 8 } },

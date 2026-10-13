@@ -60,16 +60,16 @@ export function DataTable<Row, SortKey extends string = string>({
         overflow: "auto",
         scrollbarGutter: "stable",
         scrollbarWidth: "thin",
-        scrollbarColor: "#94a3b8 #eef2f7",
+        scrollbarColor: (theme) => `${theme.palette.grey[400]} ${theme.palette.grey[100]}`,
         "&::-webkit-scrollbar": { width: 10, height: 10 },
-        "&::-webkit-scrollbar-track": { bgcolor: "#eef2f7", borderRadius: 999 },
+        "&::-webkit-scrollbar-track": { bgcolor: "grey.100", borderRadius: 999 },
         "&::-webkit-scrollbar-thumb": {
-          bgcolor: "#94a3b8",
-          border: "2px solid #eef2f7",
+          bgcolor: "grey.400",
+          border: (theme) => `2px solid ${theme.palette.grey[100]}`,
           borderRadius: 999,
         },
-        "&::-webkit-scrollbar-thumb:hover": { bgcolor: "#64748b" },
-        "&::-webkit-scrollbar-corner": { bgcolor: "#eef2f7" },
+        "&::-webkit-scrollbar-thumb:hover": { bgcolor: "grey.500" },
+        "&::-webkit-scrollbar-corner": { bgcolor: "grey.100" },
       }}
     >
       <Table
