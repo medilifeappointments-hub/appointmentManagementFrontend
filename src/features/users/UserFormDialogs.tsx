@@ -83,15 +83,17 @@ export function CreateUserDialog({ onClose, onCreated }: { onClose: () => void; 
   const showGeneral = create.error && Object.keys(fieldErrors(create.error)).length === 0;
 
   return (
-    <Dialog open onClose={create.isPending ? undefined : onClose} fullWidth maxWidth="sm" aria-labelledby="create-user-title">
-      <Box
-        component="form"
-        noValidate
-        onSubmit={handleSubmit}
-        sx={{ display: "flex", flex: "1 1 auto", flexDirection: "column", minHeight: 0, overflow: "hidden" }}
-      >
+    <Dialog
+      open
+      onClose={create.isPending ? undefined : onClose}
+      fullWidth
+      maxWidth="sm"
+      scroll="paper"
+      aria-labelledby="create-user-title"
+    >
+      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ display: "contents" }}>
         <DialogHeader id="create-user-title" title="Add user" subtitle="They sign in with this email and must change the temporary password." onClose={onClose} closeDisabled={create.isPending} />
-        <DialogContent sx={{ overflowY: "auto" }}>
+        <DialogContent>
           <Stack spacing={2.25}>
             {showGeneral && <Alert severity="error">{errorMessage(create.error)}</Alert>}
             <TextField
@@ -202,15 +204,17 @@ export function ResetPasswordDialog({ user, onClose, onDone }: { user: StaffUser
   };
 
   return (
-    <Dialog open onClose={reset.isPending ? undefined : onClose} fullWidth maxWidth="sm" aria-labelledby="reset-title">
-      <Box
-        component="form"
-        noValidate
-        onSubmit={handleSubmit}
-        sx={{ display: "flex", flex: "1 1 auto", flexDirection: "column", minHeight: 0, overflow: "hidden" }}
-      >
+    <Dialog
+      open
+      onClose={reset.isPending ? undefined : onClose}
+      fullWidth
+      maxWidth="sm"
+      scroll="paper"
+      aria-labelledby="reset-title"
+    >
+      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ display: "contents" }}>
         <DialogHeader id="reset-title" title="Reset password" subtitle={`${user.name} · ${user.email}`} onClose={onClose} closeDisabled={reset.isPending} />
-        <DialogContent sx={{ overflowY: "auto" }}>
+        <DialogContent>
           <Stack spacing={2.25}>
             <Alert severity="info">
               {user.name} will be signed out everywhere and must choose a new password after signing in with this
