@@ -56,7 +56,10 @@ function LoadingRows() {
 
 export function AppointmentsPage() {
   const theme = useTheme();
-  const phone = useMediaQuery(theme.breakpoints.down("md"));
+  // The appointment table has many business columns. Use the compact card
+  // presentation on phones and tablets, including widths constrained by the
+  // desktop sidebar, and reserve the full table for wide screens.
+  const compactView = useMediaQuery(theme.breakpoints.down("lg"));
   const { clinic, isAdmin } = useSession();
   const timeZone = clinic.timezone;
   const today = clinicToday(timeZone);
@@ -99,7 +102,7 @@ export function AppointmentsPage() {
         />
       );
     }
-    return phone ? (
+    return compactView ? (
       <AppointmentCardList rows={rows} timeZone={timeZone} onView={view} onEdit={edit} />
     ) : (
       <AppointmentTable
@@ -171,7 +174,7 @@ export function AppointmentsPage() {
             count={meta.total}
             page={Math.max(0, meta.page - 1)}
             rowsPerPage={filters.pageSize}
-            rowsPerPageOptions={phone ? [] : pageSizes}
+            rowsPerPageOptions={compactView ? [] : pageSizes}
             labelRowsPerPage="Rows"
             onPageChange={(_event, page) => update({ page: page + 1 })}
             onRowsPerPageChange={(event) => update({ pageSize: Number(event.target.value) })}
