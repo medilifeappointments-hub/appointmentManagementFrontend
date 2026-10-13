@@ -8,6 +8,7 @@ import {
   DialogActions,
   DialogContent,
   InputAdornment,
+  MenuItem,
   Stack,
   TextField,
 } from "@mui/material";
@@ -15,7 +16,8 @@ import { useState, type FormEvent } from "react";
 import { DialogHeader } from "../../components/DialogHeader";
 import { generateTemporaryPassword, PasswordField } from "../../components/PasswordField";
 import { ApiError, errorMessage } from "../../lib/api";
-import { useCreateReceptionist, useResetPassword, type StaffUser } from "./usersApi";
+import { ROLE_LABELS, type Role } from "../auth/types";
+import { useCreateUser, useResetPassword, type StaffUser } from "./usersApi";
 
 const MIN_PASSWORD = 10;
 const fieldSx = {
@@ -58,8 +60,13 @@ function fieldErrors(error: unknown): Record<string, string> {
 }
 
 export function CreateUserDialog({ onClose, onCreated }: { onClose: () => void; onCreated: (user: StaffUser) => void }) {
-  const create = useCreateReceptionist();
-  const [values, setValues] = useState({ name: "", email: "", temporaryPassword: "" });
+  const create = useCreateUser();
+  const [values, setValues] = useState<{ name: string; email: string; temporaryPassword: string; role: Role }>({
+    name: "",
+    email: "",
+    temporaryPassword: "",
+    role: "RECEPTIONIST",
+  });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = (event: FormEvent) => {
@@ -78,7 +85,7 @@ export function CreateUserDialog({ onClose, onCreated }: { onClose: () => void; 
   return (
     <Dialog open onClose={create.isPending ? undefined : onClose} fullWidth maxWidth="sm" aria-labelledby="create-user-title">
       <Box component="form" noValidate onSubmit={handleSubmit}>
-        <DialogHeader id="create-user-title" title="Add receptionist" subtitle="They sign in with this email and must change the temporary password." onClose={onClose} closeDisabled={create.isPending} />
+        <DialogHeader id="create-user-title" title="Add user" subtitle="They sign in with this email and must change the temporary password." onClose={onClose} closeDisabled={create.isPending} />
         <DialogContent>
           <Stack spacing={2.25}>
             {showGeneral && <Alert severity="error">{errorMessage(create.error)}</Alert>}
@@ -106,6 +113,20 @@ export function CreateUserDialog({ onClose, onCreated }: { onClose: () => void; 
                 },
               }}
             />
+            <TextField
+              label="Role"
+              required
+              select
+              value={values.role}
+              onChange={(event) => setValues({ ...values, role: event.target.value as Role })}
+              sx={fieldSx}
+            >
+              {(Object.keys(ROLE_LABELS) as Role[]).map((role) => (
+                <MenuItem key={role} value={role}>
+                  {ROLE_LABELS[role]}
+                </MenuItem>
+              ))}
+            </TextField>
             <TextField
               label="Email"
               type="email"

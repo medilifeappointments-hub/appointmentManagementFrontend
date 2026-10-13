@@ -29,8 +29,8 @@ function useUsersMutation<TInput>(request: (input: TInput) => Promise<StaffUser>
   });
 }
 
-export const useCreateReceptionist = () =>
-  useUsersMutation((input: { name: string; email: string; temporaryPassword: string }) =>
+export const useCreateUser = () =>
+  useUsersMutation((input: { name: string; email: string; temporaryPassword: string; role: Role }) =>
     api.post<StaffUser>("/admin/users", input).then((result) => result.data),
   );
 

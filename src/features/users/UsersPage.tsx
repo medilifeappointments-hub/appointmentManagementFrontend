@@ -189,7 +189,7 @@ export function UsersPage() {
         description="Staff accounts. Disabling an account signs it out immediately."
         actions={
           <Button variant="contained" startIcon={<PersonAddRounded />} onClick={() => setOverlay({ kind: "create" })}>
-            Add receptionist
+            Add user
           </Button>
         }
       />
