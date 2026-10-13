@@ -43,6 +43,7 @@ const numeric = { fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" } as 
 /** Columns in spreadsheet order. */
 function buildColumns(timeZone: string): Column[] {
   return [
+    { id: "recordNumber", label: FIELD_LABELS.recordNumber, minWidth: 90, render: (row) => <Box sx={numeric}>#{row.recordNumber}</Box> },
     {
       id: "clinicNumber",
       label: FIELD_LABELS.clinicNumber,
@@ -78,7 +79,9 @@ function buildColumns(timeZone: string): Column[] {
       render: (row) => <Box sx={{ ...numeric, fontWeight: 500 }}>{formatClinicDateTime(row.appointmentAt, timeZone)}</Box>,
     },
     { id: "procedure", label: FIELD_LABELS.procedure, minWidth: 160, render: (row) => row.procedure },
-    { id: "amount", label: FIELD_LABELS.amount, align: "right", render: (row) => <Box sx={numeric}>{money(row.amount)}</Box> },
+    { id: "amount", label: FIELD_LABELS.amount, align: "right", minWidth: 100, render: (row) => <Box sx={numeric}>{money(row.amount)}</Box> },
+    { id: "cashAmount", label: FIELD_LABELS.cashAmount, align: "right", minWidth: 110, render: (row) => <Box sx={numeric}>{money(row.cashAmount)}</Box> },
+    { id: "cardAmount", label: FIELD_LABELS.cardAmount, align: "right", minWidth: 110, render: (row) => <Box sx={numeric}>{money(row.cardAmount)}</Box> },
     { id: "resultIssued", label: FIELD_LABELS.resultIssued, render: (row) => muted(row.resultIssued) },
     { id: "cost", label: FIELD_LABELS.cost, align: "right", render: (row) => <Box sx={numeric}>{money(row.cost)}</Box> },
     { id: "paymentMethod", label: FIELD_LABELS.paymentMethod, render: (row) => (row.paymentMethod ? <PaymentMethodChip value={row.paymentMethod} /> : muted(null)) },
@@ -102,8 +105,8 @@ export function AppointmentTable({ rows, timeZone, sortBy, sortOrder, onSort, on
   const columns = buildColumns(timeZone);
 
   return (
-    <TableContainer sx={{ maxHeight: "calc(100vh - 340px)", minHeight: 280 }}>
-      <Table stickyHeader size="small" aria-label="Appointments">
+    <TableContainer sx={{ width: "100%", maxWidth: "100%", maxHeight: "calc(100vh - 340px)", minHeight: 280, overflowX: "auto" }}>
+      <Table stickyHeader size="small" aria-label="Appointments" sx={{ minWidth: 2100 }}>
         <TableHead>
           <TableRow>
             {columns.map((column) => (

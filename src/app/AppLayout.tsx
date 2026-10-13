@@ -32,9 +32,16 @@ export function AppLayout() {
   const logout = useLogout();
   const navigate = useNavigate();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => localStorage.getItem("sidebar-collapsed") === "true");
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
   const [changePasswordOpen, setChangePasswordOpen] = useState(false);
   const closeMenu = () => setMenuAnchor(null);
+  const toggleSidebar = () =>
+    setSidebarCollapsed((current) => {
+      localStorage.setItem("sidebar-collapsed", String(!current));
+      return !current;
+    });
+  const desktopSidebarWidth = sidebarCollapsed ? 72 : layout.sidebarWidth;
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
@@ -48,10 +55,10 @@ export function AppLayout() {
 
       <Drawer
         variant="permanent"
-        sx={{ display: { xs: "none", md: "block" }, width: layout.sidebarWidth, flexShrink: 0 }}
-        slotProps={{ paper: { sx: { width: layout.sidebarWidth } } }}
+        sx={{ display: { xs: "none", md: "block" }, width: desktopSidebarWidth, flexShrink: 0, transition: "width 180ms ease" }}
+        slotProps={{ paper: { sx: { width: desktopSidebarWidth, overflowX: "hidden", transition: "width 180ms ease" } } }}
       >
-        <SideNav />
+        <SideNav collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
       </Drawer>
       <Drawer
         variant="temporary"
@@ -144,7 +151,7 @@ export function AppLayout() {
           </Toolbar>
         </AppBar>
 
-        <Box component="main" id="main" tabIndex={-1} sx={{ flexGrow: 1, px: { xs: 2, sm: 3, lg: 4 }, py: { xs: 2.5, sm: 3 }, width: "100%", maxWidth: 1680, mx: "auto", outline: "none" }}>
+        <Box component="main" id="main" tabIndex={-1} sx={{ flexGrow: 1, px: { xs: 2, sm: 3, lg: 4 }, py: { xs: 2.5, sm: 3 }, width: "100%", maxWidth: "none", outline: "none" }}>
           <Outlet />
         </Box>
       </Box>
