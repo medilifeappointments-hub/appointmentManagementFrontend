@@ -1,7 +1,7 @@
 import { CheckCircleRounded } from "@mui/icons-material";
 import { Box, Stack, Typography } from "@mui/material";
 import type { ReactNode } from "react";
-import { BrandMark } from "../../components/BrandMark";
+import { BrandMark } from "../../../components/BrandMark";
 
 const HIGHLIGHTS = [
   "One shared record of every phone-in appointment",

@@ -15,20 +15,20 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
-import { EmptyState } from "../../components/EmptyState";
-import { ErrorAlert } from "../../components/ErrorAlert";
-import { PageHeader } from "../../components/PageHeader";
-import { clinicToday, formatLocalDate, timeZoneLabel } from "../../lib/clinicTime";
-import { useSession } from "../auth/useSession";
-import { AppointmentCardList } from "./AppointmentCardList";
-import { AppointmentDetailsDialog } from "./AppointmentDetailsDialog";
-import { AppointmentFilters } from "./AppointmentFilters";
-import { AppointmentFormDialog } from "./AppointmentFormDialog";
-import { AppointmentHistoryDialog } from "./AppointmentHistoryDialog";
-import { AppointmentTable } from "./AppointmentTable";
-import { useAppointmentList } from "./hooks/useAppointments";
-import type { Appointment, AppointmentFilters as Filters, SortField } from "./types";
-import { useAppointmentFilters } from "./useAppointmentFilters";
+import { EmptyState } from "../../../components/EmptyState";
+import { ErrorAlert } from "../../../components/ErrorAlert";
+import { PageHeader } from "../../../components/PageHeader";
+import { clinicToday, formatLocalDate, timeZoneLabel } from "../../../lib/clinicTime";
+import { useSession } from "../../auth/useSession";
+import { AppointmentCardList } from "../components/AppointmentCardList";
+import { AppointmentDetailsDialog } from "../components/AppointmentDetailsDialog";
+import { AppointmentFilters } from "../components/AppointmentFilters";
+import { AppointmentFormDialog } from "../components/AppointmentFormDialog";
+import { AppointmentHistoryDialog } from "../components/AppointmentHistoryDialog";
+import { AppointmentTable } from "../components/AppointmentTable";
+import { useAppointmentList } from "../hooks/useAppointments";
+import type { Appointment, AppointmentFilters as Filters, SortField } from "../types";
+import { useAppointmentFilters } from "../useAppointmentFilters";
 
 /** Which overlay is open. Records are snapshots taken on click, so list refreshes never alter them. */
 type Overlay =

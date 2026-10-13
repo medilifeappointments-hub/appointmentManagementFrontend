@@ -6,12 +6,12 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { DataTable, type DataTableColumn } from "../../components/DataTable";
-import { formatClinicDate, formatClinicTime } from "../../lib/clinicTime";
-import { formatMoney } from "../../lib/money";
+import { DataTable, type DataTableColumn } from "../../../components/DataTable";
+import { formatClinicDate, formatClinicTime } from "../../../lib/clinicTime";
+import { formatMoney } from "../../../lib/money";
 import { AppointmentStatusChip, ArchivedChip, PatientTypeChip, PaymentMethodChip } from "./appointmentBadges";
-import { FIELD_LABELS } from "./fields";
-import type { Appointment, SortField, SortOrder } from "./types";
+import { FIELD_LABELS } from "../fields";
+import type { Appointment, SortField, SortOrder } from "../types";
 
 type Column = DataTableColumn<Appointment, SortField>;
 

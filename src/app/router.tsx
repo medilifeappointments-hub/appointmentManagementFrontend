@@ -1,9 +1,9 @@
 import { createBrowserRouter, Navigate } from "react-router";
-import { AppointmentsPage } from "../features/appointments/AppointmentsPage";
-import { ChangePasswordPage } from "../features/auth/ChangePasswordPage";
-import { LoginPage } from "../features/auth/LoginPage";
-import { DashboardPage } from "../features/dashboard/DashboardPage";
-import { UsersPage } from "../features/users/UsersPage";
+import { AppointmentsPage } from "../features/appointments/pages/AppointmentsPage";
+import { ChangePasswordPage } from "../features/auth/pages/ChangePasswordPage";
+import { LoginPage } from "../features/auth/pages/LoginPage";
+import { DashboardPage } from "../features/dashboard/pages/DashboardPage";
+import { UsersPage } from "../features/users/pages/UsersPage";
 import { AppLayout } from "./AppLayout";
 import { PublicOnly, RequireRole, RequireSession, RequireSignedIn } from "./guards";
 import { NotFoundPage } from "./NotFoundPage";

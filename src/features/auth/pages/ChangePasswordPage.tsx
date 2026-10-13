@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { ChangePasswordDialog } from "./ChangePasswordDialog";
+import { ChangePasswordDialog } from "../components/ChangePasswordDialog";
 
 export function ChangePasswordPage() {
   const navigate = useNavigate();

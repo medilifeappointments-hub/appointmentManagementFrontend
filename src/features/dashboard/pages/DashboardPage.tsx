@@ -8,17 +8,17 @@ import {
 } from "@mui/icons-material";
 import { Alert, Box, Card, CardHeader, Grid, LinearProgress, Typography } from "@mui/material";
 import { useState } from "react";
-import { DataTable, type DataTableColumn } from "../../components/DataTable";
-import { DateRangeFields, type DateRange } from "../../components/DateRangeFields";
-import { EmptyState } from "../../components/EmptyState";
-import { ErrorAlert } from "../../components/ErrorAlert";
-import { PageHeader } from "../../components/PageHeader";
-import { StatCard } from "../../components/StatCard";
-import { clinicMonthRange, clinicToday, timeZoneLabel } from "../../lib/clinicTime";
-import { formatMoney } from "../../lib/money";
-import { useSession } from "../auth/useSession";
-import { useSummaryReport } from "./hooks/useSummaryReport";
-import type { RecordedTotals } from "./types";
+import { DataTable, type DataTableColumn } from "../../../components/DataTable";
+import { DateRangeFields, type DateRange } from "../../../components/DateRangeFields";
+import { EmptyState } from "../../../components/EmptyState";
+import { ErrorAlert } from "../../../components/ErrorAlert";
+import { PageHeader } from "../../../components/PageHeader";
+import { StatCard } from "../../../components/StatCard";
+import { clinicMonthRange, clinicToday, timeZoneLabel } from "../../../lib/clinicTime";
+import { formatMoney } from "../../../lib/money";
+import { useSession } from "../../auth/useSession";
+import { useSummaryReport } from "../hooks/useSummaryReport";
+import type { RecordedTotals } from "../types";
 
 interface BreakdownRow extends RecordedTotals {
   key: string;

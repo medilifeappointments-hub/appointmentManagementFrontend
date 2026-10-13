@@ -1,12 +1,12 @@
 import { Alert, Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, Stack } from "@mui/material";
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useNavigate } from "react-router";
-import { DialogHeader } from "../../components/DialogHeader";
-import { useNotify } from "../../components/NotificationProvider";
-import { PasswordField } from "../../components/PasswordField";
-import { ApiError, errorMessage } from "../../api/client";
-import { useChangePassword, useLogout } from "./hooks/useAuth";
-import { useSession } from "./useSession";
+import { DialogHeader } from "../../../components/DialogHeader";
+import { useNotify } from "../../../components/NotificationProvider";
+import { PasswordField } from "../../../components/PasswordField";
+import { ApiError, errorMessage } from "../../../api/client";
+import { useChangePassword, useLogout } from "../hooks/useAuth";
+import { useSession } from "../useSession";
 
 type Field = "currentPassword" | "newPassword" | "confirmPassword";
 type Errors = Partial<Record<Field, string>>;

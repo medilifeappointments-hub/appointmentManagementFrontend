@@ -13,17 +13,17 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState, type ReactNode } from "react";
-import { ConfirmDialog } from "../../components/ConfirmDialog";
-import { DetailField } from "../../components/DetailField";
-import { DialogHeader } from "../../components/DialogHeader";
-import { useNotify } from "../../components/NotificationProvider";
-import { ApiError, errorMessage } from "../../api/client";
-import { formatClinicDateTime, timeZoneLabel } from "../../lib/clinicTime";
-import { formatMoney } from "../../lib/money";
+import { ConfirmDialog } from "../../../components/ConfirmDialog";
+import { DetailField } from "../../../components/DetailField";
+import { DialogHeader } from "../../../components/DialogHeader";
+import { useNotify } from "../../../components/NotificationProvider";
+import { ApiError, errorMessage } from "../../../api/client";
+import { formatClinicDateTime, timeZoneLabel } from "../../../lib/clinicTime";
+import { formatMoney } from "../../../lib/money";
 import { AppointmentStatusChip, ArchivedChip, PatientTypeChip } from "./appointmentBadges";
-import { useSetArchived } from "./hooks/useAppointments";
-import { FIELD_LABELS, PATIENT_TYPE_LABELS, PAYMENT_METHOD_LABELS } from "./fields";
-import type { Appointment } from "./types";
+import { useSetArchived } from "../hooks/useAppointments";
+import { FIELD_LABELS, PATIENT_TYPE_LABELS, PAYMENT_METHOD_LABELS } from "../fields";
+import type { Appointment } from "../types";
 
 interface AppointmentDetailsDialogProps {
   appointment: Appointment;

@@ -1,6 +1,6 @@
 import { Chip } from "@mui/material";
-import { PATIENT_TYPE_LABELS, PAYMENT_METHOD_LABELS } from "./fields";
-import type { PatientType, PaymentMethod } from "./types";
+import { PATIENT_TYPE_LABELS, PAYMENT_METHOD_LABELS } from "../fields";
+import type { PatientType, PaymentMethod } from "../types";
 
 /** Small, consistent badges shared by the table, mobile cards and details view. */
 export function PatientTypeChip({ value }: { value: PatientType }) {

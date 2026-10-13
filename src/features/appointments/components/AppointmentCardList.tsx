@@ -1,9 +1,9 @@
 import { CallRounded, EditRounded, GroupsRounded, ScheduleRounded } from "@mui/icons-material";
 import { Box, ButtonBase, Divider, IconButton, Stack, Typography } from "@mui/material";
 import { Fragment, type ReactNode } from "react";
-import { formatClinicDateTime } from "../../lib/clinicTime";
+import { formatClinicDateTime } from "../../../lib/clinicTime";
 import { AppointmentStatusChip, ArchivedChip, PatientTypeChip } from "./appointmentBadges";
-import type { Appointment } from "./types";
+import type { Appointment } from "../types";
 
 interface AppointmentCardListProps {
   rows: Appointment[];

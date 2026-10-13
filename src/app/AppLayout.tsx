@@ -18,7 +18,7 @@ import { useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 import { BrandMark } from "../components/BrandMark";
 import { UserAvatar } from "../components/UserAvatar";
-import { ChangePasswordDialog } from "../features/auth/ChangePasswordDialog";
+import { ChangePasswordDialog } from "../features/auth/components/ChangePasswordDialog";
 import { useLogout } from "../features/auth/hooks/useAuth";
 import { ROLE_LABELS } from "../features/auth/types";
 import { useSession } from "../features/auth/useSession";

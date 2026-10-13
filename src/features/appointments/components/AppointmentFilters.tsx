@@ -1,11 +1,11 @@
 import { SearchRounded, TuneRounded } from "@mui/icons-material";
 import { Badge, Box, Button, Chip, Collapse, InputAdornment, MenuItem, Stack, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { DateRangeFields } from "../../components/DateRangeFields";
-import { FreeSoloField } from "../../components/FreeSoloField";
-import { useDebouncedValue } from "../../lib/useDebouncedValue";
-import { useFilterOptions } from "./hooks/useAppointments";
-import type { AppointmentFilters as Filters } from "./types";
+import { DateRangeFields } from "../../../components/DateRangeFields";
+import { FreeSoloField } from "../../../components/FreeSoloField";
+import { useDebouncedValue } from "../../../lib/useDebouncedValue";
+import { useFilterOptions } from "../hooks/useAppointments";
+import type { AppointmentFilters as Filters } from "../types";
 
 interface AppointmentFiltersProps {
   filters: Filters;

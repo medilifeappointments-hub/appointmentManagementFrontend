@@ -1,10 +1,10 @@
 import { Alert, Box, Button, CircularProgress, Stack, TextField } from "@mui/material";
 import { useState, type FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { PasswordField } from "../../components/PasswordField";
-import { ApiError, errorMessage } from "../../api/client";
-import { useLogin } from "./hooks/useAuth";
-import { AuthLayout } from "./AuthLayout";
+import { PasswordField } from "../../../components/PasswordField";
+import { ApiError, errorMessage } from "../../../api/client";
+import { AuthLayout } from "../components/AuthLayout";
+import { useLogin } from "../hooks/useAuth";
 
 interface LoginErrors {
   email?: string;

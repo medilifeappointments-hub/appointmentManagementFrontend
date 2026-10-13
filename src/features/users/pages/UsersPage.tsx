@@ -20,18 +20,18 @@ import {
   useTheme,
 } from "@mui/material";
 import { Fragment, useState } from "react";
-import { ConfirmDialog } from "../../components/ConfirmDialog";
-import { EmptyState } from "../../components/EmptyState";
-import { ErrorAlert } from "../../components/ErrorAlert";
-import { useNotify } from "../../components/NotificationProvider";
-import { PageHeader } from "../../components/PageHeader";
-import { UserAvatar } from "../../components/UserAvatar";
-import { errorMessage } from "../../api/client";
-import { formatClinicDateTime } from "../../lib/clinicTime";
-import { ROLE_LABELS } from "../auth/types";
-import { useSession } from "../auth/useSession";
-import { CreateUserDialog, ResetPasswordDialog } from "./UserFormDialogs";
-import { useSetUserActive, useUsers, type StaffUser } from "./hooks/useUsers";
+import { ConfirmDialog } from "../../../components/ConfirmDialog";
+import { EmptyState } from "../../../components/EmptyState";
+import { ErrorAlert } from "../../../components/ErrorAlert";
+import { useNotify } from "../../../components/NotificationProvider";
+import { PageHeader } from "../../../components/PageHeader";
+import { UserAvatar } from "../../../components/UserAvatar";
+import { errorMessage } from "../../../api/client";
+import { formatClinicDateTime } from "../../../lib/clinicTime";
+import { ROLE_LABELS } from "../../auth/types";
+import { useSession } from "../../auth/useSession";
+import { CreateUserDialog, ResetPasswordDialog } from "../components/UserFormDialogs";
+import { useSetUserActive, useUsers, type StaffUser } from "../hooks/useUsers";
 
 type Overlay = { kind: "create" } | { kind: "reset"; user: StaffUser } | { kind: "toggle"; user: StaffUser };
 
