@@ -3,31 +3,17 @@ import {
   Box,
   IconButton,
   Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableSortLabel,
   Tooltip,
   Typography,
 } from "@mui/material";
-import type { ReactNode } from "react";
+import { DataTable, type DataTableColumn } from "../../components/DataTable";
 import { formatClinicDate, formatClinicTime } from "../../lib/clinicTime";
 import { formatMoney } from "../../lib/money";
 import { AppointmentStatusChip, ArchivedChip, PatientTypeChip, PaymentMethodChip } from "./appointmentBadges";
 import { FIELD_LABELS } from "./fields";
 import type { Appointment, SortField, SortOrder } from "./types";
 
-interface Column {
-  id: string;
-  label: string;
-  render: (row: Appointment) => ReactNode;
-  sortField?: SortField;
-  align?: "left" | "right";
-  minWidth?: number;
-}
+type Column = DataTableColumn<Appointment, SortField>;
 
 const muted = (value: string | null) =>
   value ?? (
@@ -63,7 +49,7 @@ function buildColumns(timeZone: string): Column[] {
     {
       id: "patientName",
       label: FIELD_LABELS.patientName,
-      sortField: "patientName",
+      sortKey: "patientName",
       minWidth: 170,
       render: (row) => (
         <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
@@ -78,7 +64,7 @@ function buildColumns(timeZone: string): Column[] {
     {
       id: "appointmentDate",
       label: "Date",
-      sortField: "appointmentAt",
+      sortKey: "appointmentAt",
       minWidth: 120,
       render: (row) => <Box sx={{ ...numeric, fontWeight: 500 }}>{formatClinicDate(row.appointmentAt, timeZone)}</Box>,
     },
@@ -115,108 +101,34 @@ export function AppointmentTable({ rows, timeZone, sortBy, sortOrder, onSort, on
   const columns = buildColumns(timeZone);
 
   return (
-    <TableContainer
-      sx={{
-        width: "100%",
-        maxWidth: "100%",
-        maxHeight: "calc(100vh - 340px)",
-        overflow: "auto",
-        scrollbarGutter: "stable",
-        scrollbarWidth: "thin",
-        scrollbarColor: "#94a3b8 #eef2f7",
-        "&::-webkit-scrollbar": { width: 10, height: 10 },
-        "&::-webkit-scrollbar-track": {
-          bgcolor: "#eef2f7",
-          borderRadius: 999,
-        },
-        "&::-webkit-scrollbar-thumb": {
-          bgcolor: "#94a3b8",
-          border: "2px solid #eef2f7",
-          borderRadius: 999,
-        },
-        "&::-webkit-scrollbar-thumb:hover": { bgcolor: "#64748b" },
-        "&::-webkit-scrollbar-corner": { bgcolor: "#eef2f7" },
-      }}
-    >
-      <Table
-        stickyHeader
-        size="small"
-        aria-label="Appointments"
-        sx={{
-          width: "100%",
-          minWidth: desktopTableMinWidth,
-          "& .MuiTableCell-root": { px: 1 },
-        }}
-      >
-        <TableHead>
-          <TableRow>
-            {columns.map((column) => (
-              <TableCell
-                key={column.id}
-                align={column.align}
-                sx={{ minWidth: column.minWidth }}
-                sortDirection={column.sortField && sortBy === column.sortField ? sortOrder : false}
-              >
-                {column.sortField ? (
-                  <TableSortLabel
-                    active={sortBy === column.sortField}
-                    direction={sortBy === column.sortField ? sortOrder : "desc"}
-                    onClick={() => onSort(column.sortField!)}
-                  >
-                    {column.label}
-                  </TableSortLabel>
-                ) : (
-                  column.label
-                )}
-              </TableCell>
-            ))}
-            <TableCell
-              align="right"
-              sx={{ width: 88, minWidth: 88, maxWidth: 88 }}
-            >
-              <Box component="span" sx={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)" }}>
-                Actions
-              </Box>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id} hover onClick={() => onView(row)} sx={{ cursor: "pointer", opacity: row.archivedAt ? 0.65 : 1 }}>
-              {columns.map((column) => (
-                <TableCell key={column.id} align={column.align} sx={{ whiteSpace: "nowrap" }}>
-                  {column.render(row)}
-                </TableCell>
-              ))}
-              <TableCell
-                align="right"
-                onClick={(event) => event.stopPropagation()}
-                sx={{
-                  width: 88,
-                  minWidth: 88,
-                  maxWidth: 88,
-                  py: 0.5,
-                }}
-              >
-                <Stack direction="row" spacing={0.25} sx={{ justifyContent: "flex-end" }}>
-                  <Tooltip title="View details">
-                    <IconButton size="small" aria-label={`View record ${row.recordNumber}`} onClick={() => onView(row)}>
-                      <VisibilityRounded fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                  {!row.archivedAt && (
-                    <Tooltip title="Edit">
-                      <IconButton size="small" aria-label={`Edit record ${row.recordNumber}`} onClick={() => onEdit(row)}>
-                        <EditRounded fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  )}
-                </Stack>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <DataTable
+      ariaLabel="Appointments"
+      rows={rows}
+      columns={columns}
+      getRowId={(row) => row.id}
+      minWidth={desktopTableMinWidth}
+      maxHeight="calc(100vh - 340px)"
+      sortBy={sortBy}
+      sortOrder={sortOrder}
+      onSort={onSort}
+      onRowClick={onView}
+      getRowOpacity={(row) => (row.archivedAt ? 0.65 : 1)}
+      renderActions={(row) => (
+        <Stack direction="row" spacing={0.25} sx={{ justifyContent: "flex-end" }}>
+          <Tooltip title="View details">
+            <IconButton size="small" aria-label={`View record ${row.recordNumber}`} onClick={() => onView(row)}>
+              <VisibilityRounded fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          {!row.archivedAt && (
+            <Tooltip title="Edit">
+              <IconButton size="small" aria-label={`Edit record ${row.recordNumber}`} onClick={() => onEdit(row)}>
+                <EditRounded fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Stack>
+      )}
+    />
   );
 }
