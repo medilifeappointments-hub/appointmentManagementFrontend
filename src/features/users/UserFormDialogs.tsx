@@ -93,7 +93,7 @@ export function CreateUserDialog({ onClose, onCreated }: { onClose: () => void; 
     >
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ display: "contents" }}>
         <DialogHeader id="create-user-title" title="Add user" subtitle="They sign in with this email and must change the temporary password." onClose={onClose} closeDisabled={create.isPending} />
-        <DialogContent>
+        <DialogContent sx={{ pt: 3 }}>
           <Stack spacing={2.25}>
             {showGeneral && <Alert severity="error">{errorMessage(create.error)}</Alert>}
             <TextField
@@ -214,7 +214,7 @@ export function ResetPasswordDialog({ user, onClose, onDone }: { user: StaffUser
     >
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ display: "contents" }}>
         <DialogHeader id="reset-title" title="Reset password" subtitle={`${user.name} · ${user.email}`} onClose={onClose} closeDisabled={reset.isPending} />
-        <DialogContent>
+        <DialogContent sx={{ pt: 3 }}>
           <Stack spacing={2.25}>
             <Alert severity="info">
               {user.name} will be signed out everywhere and must choose a new password after signing in with this
