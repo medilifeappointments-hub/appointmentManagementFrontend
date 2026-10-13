@@ -112,7 +112,7 @@ export function AppointmentTable({ rows, timeZone, sortBy, sortOrder, onSort, on
   const columns = buildColumns(timeZone);
 
   return (
-    <TableContainer sx={{ width: "100%", maxWidth: "100%", maxHeight: "calc(100vh - 340px)", minHeight: 280, overflowX: "auto" }}>
+    <TableContainer sx={{ width: "100%", maxWidth: "100%", maxHeight: "calc(100vh - 340px)", overflowX: "auto" }}>
       <Table stickyHeader size="small" aria-label="Appointments" sx={{ minWidth: 2100 }}>
         <TableHead>
           <TableRow>
@@ -136,7 +136,10 @@ export function AppointmentTable({ rows, timeZone, sortBy, sortOrder, onSort, on
                 )}
               </TableCell>
             ))}
-            <TableCell align="right" sx={{ position: "sticky", right: 0, zIndex: 3 }}>
+            <TableCell
+              align="right"
+              sx={{ position: "sticky", right: 0, zIndex: 3, width: 88, minWidth: 88, maxWidth: 88 }}
+            >
               <Box component="span" sx={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)" }}>
                 Actions
               </Box>
@@ -154,7 +157,16 @@ export function AppointmentTable({ rows, timeZone, sortBy, sortOrder, onSort, on
               <TableCell
                 align="right"
                 onClick={(event) => event.stopPropagation()}
-                sx={{ position: "sticky", right: 0, bgcolor: "background.paper", py: 0.5, boxShadow: "inset 1px 0 0 rgba(15,23,42,0.06)" }}
+                sx={{
+                  position: "sticky",
+                  right: 0,
+                  width: 88,
+                  minWidth: 88,
+                  maxWidth: 88,
+                  bgcolor: "background.paper",
+                  py: 0.5,
+                  boxShadow: "inset 1px 0 0 rgba(15,23,42,0.06)",
+                }}
               >
                 <Stack direction="row" spacing={0.25} sx={{ justifyContent: "flex-end" }}>
                   <Tooltip title="View details">
