@@ -107,7 +107,7 @@ interface AppointmentTableProps {
   onEdit: (row: Appointment) => void;
 }
 
-/** Desktop/tablet table: sticky header, horizontal scroll, actions pinned to the right edge. */
+/** Desktop/tablet table with a sticky header and natural horizontal scrolling. */
 export function AppointmentTable({ rows, timeZone, sortBy, sortOrder, onSort, onView, onEdit }: AppointmentTableProps) {
   const columns = buildColumns(timeZone);
 
@@ -138,7 +138,7 @@ export function AppointmentTable({ rows, timeZone, sortBy, sortOrder, onSort, on
             ))}
             <TableCell
               align="right"
-              sx={{ position: "sticky", right: 0, zIndex: 3, width: 88, minWidth: 88, maxWidth: 88 }}
+              sx={{ width: 88, minWidth: 88, maxWidth: 88 }}
             >
               <Box component="span" sx={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)" }}>
                 Actions
@@ -158,14 +158,10 @@ export function AppointmentTable({ rows, timeZone, sortBy, sortOrder, onSort, on
                 align="right"
                 onClick={(event) => event.stopPropagation()}
                 sx={{
-                  position: "sticky",
-                  right: 0,
                   width: 88,
                   minWidth: 88,
                   maxWidth: 88,
-                  bgcolor: "background.paper",
                   py: 0.5,
-                  boxShadow: "inset 1px 0 0 rgba(15,23,42,0.06)",
                 }}
               >
                 <Stack direction="row" spacing={0.25} sx={{ justifyContent: "flex-end" }}>
