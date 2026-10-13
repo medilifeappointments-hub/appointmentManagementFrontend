@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import type { ReactNode } from "react";
-import { formatClinicDateTime } from "../../lib/clinicTime";
+import { formatClinicDate, formatClinicTime } from "../../lib/clinicTime";
 import { formatMoney } from "../../lib/money";
 import { AppointmentStatusChip, ArchivedChip, PatientTypeChip, PaymentMethodChip } from "./appointmentBadges";
 import { FIELD_LABELS } from "./fields";
@@ -73,10 +73,17 @@ function buildColumns(timeZone: string): Column[] {
     },
     { id: "location", label: FIELD_LABELS.location, minWidth: 120, render: (row) => muted(row.location) },
     {
-      id: "appointmentAt",
-      label: "Date & Time",
+      id: "appointmentDate",
+      label: "Date",
       sortField: "appointmentAt",
-      render: (row) => <Box sx={{ ...numeric, fontWeight: 500 }}>{formatClinicDateTime(row.appointmentAt, timeZone)}</Box>,
+      minWidth: 120,
+      render: (row) => <Box sx={{ ...numeric, fontWeight: 500 }}>{formatClinicDate(row.appointmentAt, timeZone)}</Box>,
+    },
+    {
+      id: "appointmentTime",
+      label: "Time",
+      minWidth: 100,
+      render: (row) => <Box sx={{ ...numeric, fontWeight: 500 }}>{formatClinicTime(row.appointmentAt, timeZone)}</Box>,
     },
     { id: "procedure", label: FIELD_LABELS.procedure, minWidth: 160, render: (row) => row.procedure },
     { id: "amount", label: FIELD_LABELS.amount, align: "right", minWidth: 100, render: (row) => <Box sx={numeric}>{money(row.amount)}</Box> },

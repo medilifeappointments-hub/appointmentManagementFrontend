@@ -37,29 +37,55 @@ export function clinicMonthRange(today: string): { from: string; to: string } {
   return { from: `${prefix}-01`, to: `${prefix}-${String(finalDay).padStart(2, "0")}` };
 }
 
-const dateTimeFormatters = new Map<string, Intl.DateTimeFormat>();
-function dateTimeFormatter(timeZone: string) {
-  let formatter = dateTimeFormatters.get(timeZone);
+const dateFormatters = new Map<string, Intl.DateTimeFormat>();
+function dateFormatter(timeZone: string) {
+  let formatter = dateFormatters.get(timeZone);
   if (!formatter) {
     formatter = new Intl.DateTimeFormat("en-GB", {
       timeZone,
       day: "2-digit",
       month: "short",
       year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      hourCycle: "h23",
     });
-    dateTimeFormatters.set(timeZone, formatter);
+    dateFormatters.set(timeZone, formatter);
   }
   return formatter;
 }
 
-/** e.g. "13 Oct 2026, 01:00" in the clinic timezone. */
-export function formatClinicDateTime(iso: string | null | undefined, timeZone: string): string {
+const timeFormatters = new Map<string, Intl.DateTimeFormat>();
+function timeFormatter(timeZone: string) {
+  let formatter = timeFormatters.get(timeZone);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone,
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+    timeFormatters.set(timeZone, formatter);
+  }
+  return formatter;
+}
+
+/** e.g. "13 Oct 2026" in the clinic timezone. */
+export function formatClinicDate(iso: string | null | undefined, timeZone: string): string {
   if (!iso) return "—";
   const date = new Date(iso);
-  return Number.isNaN(date.getTime()) ? "—" : dateTimeFormatter(timeZone).format(date);
+  return Number.isNaN(date.getTime()) ? "—" : dateFormatter(timeZone).format(date);
+}
+
+/** e.g. "01:00 AM" in the clinic timezone. */
+export function formatClinicTime(iso: string | null | undefined, timeZone: string): string {
+  if (!iso) return "—";
+  const date = new Date(iso);
+  return Number.isNaN(date.getTime()) ? "—" : timeFormatter(timeZone).format(date);
+}
+
+/** e.g. "13 Oct 2026, 01:00 AM" in the clinic timezone. */
+export function formatClinicDateTime(iso: string | null | undefined, timeZone: string): string {
+  const date = formatClinicDate(iso, timeZone);
+  if (date === "—") return date;
+  return `${date}, ${formatClinicTime(iso, timeZone)}`;
 }
 
 /** "2026-10-13" → "13 Oct 2026" (calendar date, no timezone conversion). */
