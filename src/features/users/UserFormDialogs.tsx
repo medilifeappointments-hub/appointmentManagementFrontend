@@ -99,7 +99,6 @@ export function CreateUserDialog({ onClose, onCreated }: { onClose: () => void; 
             <TextField
               label="Full name"
               required
-              autoFocus
               value={values.name}
               autoComplete="name"
               onChange={(event) => {
