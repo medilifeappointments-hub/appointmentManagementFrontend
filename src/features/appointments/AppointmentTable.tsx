@@ -39,6 +39,7 @@ const muted = (value: string | null) =>
 const money = (value: string | null) => (value === null ? muted(null) : formatMoney(value));
 
 const numeric = { fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" } as const;
+const desktopTableMinWidth = 2200;
 
 /** Columns in spreadsheet order. */
 function buildColumns(timeZone: string): Column[] {
@@ -113,7 +114,12 @@ export function AppointmentTable({ rows, timeZone, sortBy, sortOrder, onSort, on
 
   return (
     <TableContainer sx={{ width: "100%", maxWidth: "100%", maxHeight: "calc(100vh - 340px)", overflowX: "auto" }}>
-      <Table stickyHeader size="small" aria-label="Appointments" sx={{ width: "max-content" }}>
+      <Table
+        stickyHeader
+        size="small"
+        aria-label="Appointments"
+        sx={{ width: "100%", minWidth: desktopTableMinWidth }}
+      >
         <TableHead>
           <TableRow>
             {columns.map((column) => (
