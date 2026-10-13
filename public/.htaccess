@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Existing static files and directories are served normally.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# API URLs are not frontend routes and must never return index.html.
+RewriteRule ^api(?:/|$) - [L]
+
+# Send browser routes to React Router. React renders its own 404 for unknown routes.
+RewriteRule ^ index.html [L]

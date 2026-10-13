@@ -6,6 +6,7 @@ import { DashboardPage } from "../features/dashboard/DashboardPage";
 import { UsersPage } from "../features/users/UsersPage";
 import { AppLayout } from "./AppLayout";
 import { PublicOnly, RequireRole, RequireSession, RequireSignedIn } from "./guards";
+import { NotFoundPage } from "./NotFoundPage";
 
 export const router = createBrowserRouter([
   {
@@ -37,5 +38,5 @@ export const router = createBrowserRouter([
       },
     ],
   },
-  { path: "*", element: <Navigate to="/appointments" replace /> },
+  { path: "*", element: <NotFoundPage /> },
 ]);
