@@ -15,9 +15,9 @@ import {
 import { useState, type FormEvent } from "react";
 import { DialogHeader } from "../../components/DialogHeader";
 import { generateTemporaryPassword, PasswordField } from "../../components/PasswordField";
-import { ApiError, errorMessage } from "../../lib/api";
+import { ApiError, errorMessage } from "../../api/client";
 import { ROLE_LABELS, type Role } from "../auth/types";
-import { useCreateUser, useResetPassword, type StaffUser } from "./usersApi";
+import { useCreateUser, useResetPassword, type StaffUser } from "./hooks/useUsers";
 
 const MIN_PASSWORD = 10;
 const fieldSx = {

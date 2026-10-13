@@ -21,7 +21,7 @@ import { DialogHeader } from "../../components/DialogHeader";
 import { EmptyState } from "../../components/EmptyState";
 import { ErrorAlert } from "../../components/ErrorAlert";
 import { formatClinicDateTime } from "../../lib/clinicTime";
-import { useAppointmentHistory } from "./appointmentsApi";
+import { useAppointmentHistory } from "./hooks/useAppointments";
 import { fieldLabel, formatAuditValue } from "./fields";
 import type { AuditAction, AuditEvent } from "./types";
 

@@ -7,7 +7,6 @@ import {
   TrendingUpRounded,
 } from "@mui/icons-material";
 import { Alert, Box, Card, CardHeader, Grid, LinearProgress, Typography } from "@mui/material";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { DataTable, type DataTableColumn } from "../../components/DataTable";
 import { DateRangeFields, type DateRange } from "../../components/DateRangeFields";
@@ -15,48 +14,11 @@ import { EmptyState } from "../../components/EmptyState";
 import { ErrorAlert } from "../../components/ErrorAlert";
 import { PageHeader } from "../../components/PageHeader";
 import { StatCard } from "../../components/StatCard";
-import { api } from "../../lib/api";
 import { clinicMonthRange, clinicToday, timeZoneLabel } from "../../lib/clinicTime";
 import { formatMoney } from "../../lib/money";
 import { useSession } from "../auth/useSession";
-
-interface RecordedTotals {
-  records: number;
-  recordedAmount: string;
-  recordedCost: string;
-  recordedNet: string;
-  amountEntries: number;
-  costEntries: number;
-  recordedCash: string;
-  recordedCard: string;
-  recordedCollected: string;
-  recordedOutstanding: string;
-}
-
-interface SummaryReport {
-  range: DateRange;
-  totals: RecordedTotals;
-  byReceptionist: Array<RecordedTotals & { userId: string; name: string }>;
-  byTeam: Array<RecordedTotals & { team: string }>;
-  byStatus: Array<RecordedTotals & { status: string }>;
-  byProcedure: Array<RecordedTotals & { procedure: string }>;
-  byLocation: Array<RecordedTotals & { location: string }>;
-  byPatientType: Array<RecordedTotals & { patientType: string }>;
-  byClinicNumber: Array<RecordedTotals & { clinicNumber: string }>;
-  byPaymentMethod: Array<RecordedTotals & { paymentMethod: string }>;
-  archivedRecords: number;
-  staff: { activeReceptionists: number; totalReceptionists: number };
-}
-
-function useSummaryReport(range: DateRange) {
-  const valid = Boolean(range.from && range.to && range.from <= range.to);
-  return useQuery({
-    queryKey: ["reports", "summary", range],
-    queryFn: () => api.get<SummaryReport>("/admin/reports/summary", { from: range.from, to: range.to }).then((r) => r.data),
-    enabled: valid,
-    placeholderData: keepPreviousData,
-  });
-}
+import { useSummaryReport } from "./hooks/useSummaryReport";
+import type { RecordedTotals } from "./types";
 
 interface BreakdownRow extends RecordedTotals {
   key: string;

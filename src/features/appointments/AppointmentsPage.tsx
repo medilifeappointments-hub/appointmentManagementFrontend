@@ -26,7 +26,7 @@ import { AppointmentFilters } from "./AppointmentFilters";
 import { AppointmentFormDialog } from "./AppointmentFormDialog";
 import { AppointmentHistoryDialog } from "./AppointmentHistoryDialog";
 import { AppointmentTable } from "./AppointmentTable";
-import { useAppointmentList } from "./appointmentsApi";
+import { useAppointmentList } from "./hooks/useAppointments";
 import type { Appointment, AppointmentFilters as Filters, SortField } from "./types";
 import { useAppointmentFilters } from "./useAppointmentFilters";
 

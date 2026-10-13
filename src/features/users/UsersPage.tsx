@@ -26,12 +26,12 @@ import { ErrorAlert } from "../../components/ErrorAlert";
 import { useNotify } from "../../components/NotificationProvider";
 import { PageHeader } from "../../components/PageHeader";
 import { UserAvatar } from "../../components/UserAvatar";
-import { errorMessage } from "../../lib/api";
+import { errorMessage } from "../../api/client";
 import { formatClinicDateTime } from "../../lib/clinicTime";
 import { ROLE_LABELS } from "../auth/types";
 import { useSession } from "../auth/useSession";
 import { CreateUserDialog, ResetPasswordDialog } from "./UserFormDialogs";
-import { useSetUserActive, useUsers, type StaffUser } from "./usersApi";
+import { useSetUserActive, useUsers, type StaffUser } from "./hooks/useUsers";
 
 type Overlay = { kind: "create" } | { kind: "reset"; user: StaffUser } | { kind: "toggle"; user: StaffUser };
 

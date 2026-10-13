@@ -1,5 +1,5 @@
 import { Alert, AlertTitle, Button } from "@mui/material";
-import { errorMessage } from "../lib/api";
+import { errorMessage } from "../api/client";
 
 interface ErrorAlertProps {
   error: unknown;

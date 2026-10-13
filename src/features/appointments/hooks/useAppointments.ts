@@ -1,7 +1,6 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { api } from "../../lib/api";
-import type { AppointmentFieldsPayload } from "./appointmentForm";
-import type { Appointment, AppointmentFilters, AppointmentHistory, FilterOptions, PageMeta } from "./types";
+import type { AppointmentFilters } from "../types";
+import { appointmentsService } from "../services/appointmentsService";
 
 /** How often the visible list refreshes so receptionists see each other's entries. */
 export const LIST_REFRESH_MS = 30_000;
@@ -17,24 +16,7 @@ export const appointmentKeys = {
 export function useAppointmentList(filters: AppointmentFilters) {
   return useQuery({
     queryKey: appointmentKeys.list(filters),
-    queryFn: ({ signal }) =>
-      api.get<Appointment[], PageMeta>(
-        "/appointments",
-        {
-          from: filters.from,
-          to: filters.to,
-          q: filters.q.trim(),
-          team: filters.team.trim(),
-          location: filters.location.trim(),
-          status: filters.status.trim(),
-          archived: filters.archived === "active" ? undefined : filters.archived,
-          page: filters.page,
-          pageSize: filters.pageSize,
-          sortBy: filters.sortBy,
-          sortOrder: filters.sortOrder,
-        },
-        signal,
-      ),
+    queryFn: ({ signal }) => appointmentsService.list(filters, signal),
     placeholderData: keepPreviousData,
     refetchInterval: LIST_REFRESH_MS,
     refetchOnWindowFocus: true,
@@ -44,7 +26,7 @@ export function useAppointmentList(filters: AppointmentFilters) {
 export function useFilterOptions() {
   return useQuery({
     queryKey: appointmentKeys.filterOptions(),
-    queryFn: () => api.get<FilterOptions>("/appointments/filter-options").then((result) => result.data),
+    queryFn: appointmentsService.filterOptions,
     staleTime: 5 * 60_000,
   });
 }
@@ -52,14 +34,14 @@ export function useFilterOptions() {
 export function useClinicNumbers() {
   return useQuery({
     queryKey: appointmentKeys.clinicNumbers(),
-    queryFn: () => api.get<string[]>("/clinic-numbers").then((result) => result.data),
+    queryFn: appointmentsService.clinicNumbers,
   });
 }
 
 export function useAddClinicNumber() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (number: string) => api.post<{ number: string }>("/clinic-numbers", { number }).then((result) => result.data),
+    mutationFn: appointmentsService.addClinicNumber,
     onSuccess: () => void queryClient.invalidateQueries({ queryKey: appointmentKeys.clinicNumbers() }),
   });
 }
@@ -67,7 +49,7 @@ export function useAddClinicNumber() {
 export function useAppointmentHistory(id: string | null) {
   return useQuery({
     queryKey: appointmentKeys.history(id ?? ""),
-    queryFn: () => api.get<AppointmentHistory>(`/admin/appointments/${id}/history`).then((result) => result.data),
+    queryFn: () => appointmentsService.history(id!),
     enabled: Boolean(id),
   });
 }
@@ -80,8 +62,7 @@ function useInvalidateAppointments() {
 export function useCreateAppointment() {
   const invalidate = useInvalidateAppointments();
   return useMutation({
-    mutationFn: (payload: AppointmentFieldsPayload & { submissionKey: string }) =>
-      api.post<Appointment, { replayed: boolean }>("/appointments", payload),
+    mutationFn: appointmentsService.create,
     onSuccess: () => void invalidate(),
   });
 }
@@ -89,8 +70,7 @@ export function useCreateAppointment() {
 export function useUpdateAppointment() {
   const invalidate = useInvalidateAppointments();
   return useMutation({
-    mutationFn: ({ id, ...payload }: AppointmentFieldsPayload & { id: string; version: number }) =>
-      api.put<Appointment>(`/appointments/${id}`, payload).then((result) => result.data),
+    mutationFn: appointmentsService.update,
     onSuccess: () => void invalidate(),
   });
 }
@@ -98,10 +78,7 @@ export function useUpdateAppointment() {
 export function useSetArchived() {
   const invalidate = useInvalidateAppointments();
   return useMutation({
-    mutationFn: ({ id, version, archive }: { id: string; version: number; archive: boolean }) =>
-      api
-        .post<Appointment>(`/admin/appointments/${id}/${archive ? "archive" : "restore"}`, { version })
-        .then((result) => result.data),
+    mutationFn: appointmentsService.setArchived,
     onSuccess: () => void invalidate(),
   });
 }

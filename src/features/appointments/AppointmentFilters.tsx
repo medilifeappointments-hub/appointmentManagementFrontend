@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { DateRangeFields } from "../../components/DateRangeFields";
 import { FreeSoloField } from "../../components/FreeSoloField";
 import { useDebouncedValue } from "../../lib/useDebouncedValue";
-import { useFilterOptions } from "./appointmentsApi";
+import { useFilterOptions } from "./hooks/useAppointments";
 import type { AppointmentFilters as Filters } from "./types";
 
 interface AppointmentFiltersProps {

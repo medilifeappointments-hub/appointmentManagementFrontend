@@ -2,8 +2,8 @@ import { Alert, Box, Button, CircularProgress, Stack, TextField } from "@mui/mat
 import { useState, type FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { PasswordField } from "../../components/PasswordField";
-import { ApiError, errorMessage } from "../../lib/api";
-import { useLogin } from "./authApi";
+import { ApiError, errorMessage } from "../../api/client";
+import { useLogin } from "./hooks/useAuth";
 import { AuthLayout } from "./AuthLayout";
 
 interface LoginErrors {

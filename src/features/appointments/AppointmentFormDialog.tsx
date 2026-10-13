@@ -23,7 +23,7 @@ import { DetailField } from "../../components/DetailField";
 import { DialogHeader } from "../../components/DialogHeader";
 import { FormSection } from "../../components/FormSection";
 import { useNotify } from "../../components/NotificationProvider";
-import { ApiError, errorMessage } from "../../lib/api";
+import { ApiError, errorMessage } from "../../api/client";
 import { clinicNowLocal, formatClinicDateTime, timeZoneLabel } from "../../lib/clinicTime";
 import {
   changedFields,
@@ -39,7 +39,7 @@ import {
   type FormErrors,
   type FormField,
 } from "./appointmentForm";
-import { useAddClinicNumber, useClinicNumbers, useCreateAppointment, useUpdateAppointment } from "./appointmentsApi";
+import { useAddClinicNumber, useClinicNumbers, useCreateAppointment, useUpdateAppointment } from "./hooks/useAppointments";
 import { APPOINTMENT_STATUS_OPTIONS, FIELD_LABELS, FIELD_LIMITS, PATIENT_TYPE_LABELS, PAYMENT_METHOD_LABELS, RESULT_ISSUED_OPTIONS, fieldLabel } from "./fields";
 import type { Appointment } from "./types";
 

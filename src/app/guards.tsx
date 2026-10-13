@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { Navigate, Outlet, Link as RouterLink, useLocation } from "react-router";
 import { ErrorAlert } from "../components/ErrorAlert";
 import { LoadingScreen } from "../components/LoadingScreen";
-import { useSessionQuery } from "../features/auth/authApi";
+import { useSessionQuery } from "../features/auth/hooks/useAuth";
 import type { Role } from "../features/auth/types";
 
 /** Waits for the session check, then renders children with a guaranteed session. */

@@ -1,4 +1,4 @@
-import { useSessionQuery } from "./authApi";
+import { useSessionQuery } from "./hooks/useAuth";
 import type { Session } from "./types";
 
 /**

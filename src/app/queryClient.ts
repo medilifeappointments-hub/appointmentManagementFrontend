@@ -1,6 +1,6 @@
 import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
-import { ApiError, setCsrfToken } from "../lib/api";
-import { sessionQueryKey } from "../features/auth/authApi";
+import { ApiError, setCsrfToken } from "../api/client";
+import { sessionQueryKey } from "../features/auth/hooks/useAuth";
 
 /**
  * Session-level reactions to API errors, wherever they happen:
