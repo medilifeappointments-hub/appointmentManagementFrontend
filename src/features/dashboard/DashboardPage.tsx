@@ -6,9 +6,10 @@ import {
   ReceiptLongRounded,
   TrendingUpRounded,
 } from "@mui/icons-material";
-import { Alert, Box, Card, CardHeader, Grid, LinearProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { Alert, Box, Card, CardHeader, Grid, LinearProgress, Typography } from "@mui/material";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { DataTable, type DataTableColumn } from "../../components/DataTable";
 import { DateRangeFields, type DateRange } from "../../components/DateRangeFields";
 import { EmptyState } from "../../components/EmptyState";
 import { ErrorAlert } from "../../components/ErrorAlert";
@@ -62,61 +63,44 @@ interface BreakdownRow extends RecordedTotals {
   label: string;
 }
 
+const numericCell = { fontVariantNumeric: "tabular-nums", fontWeight: 500 } as const;
+
 function BreakdownTable({ title, labelHeader, rows }: { title: string; labelHeader: string; rows: BreakdownRow[] }) {
+  const columns: DataTableColumn<BreakdownRow>[] = [
+    {
+      id: "label",
+      label: labelHeader,
+      minWidth: 150,
+      render: (row) => (
+        <Typography variant="body2" sx={{ fontWeight: 650 }}>
+          {row.label}
+        </Typography>
+      ),
+    },
+    { id: "records", label: "Appointments", align: "right", minWidth: 100, render: (row) => <Box sx={numericCell}>{row.records}</Box> },
+    { id: "amount", label: "Amount", align: "right", minWidth: 95, render: (row) => <Box sx={numericCell}>{formatMoney(row.recordedAmount)}</Box> },
+    { id: "cash", label: "Cash", align: "right", minWidth: 90, render: (row) => <Box sx={numericCell}>{formatMoney(row.recordedCash)}</Box> },
+    { id: "card", label: "Card", align: "right", minWidth: 90, render: (row) => <Box sx={numericCell}>{formatMoney(row.recordedCard)}</Box> },
+    { id: "collected", label: "Collected", align: "right", minWidth: 105, render: (row) => <Box sx={numericCell}>{formatMoney(row.recordedCollected)}</Box> },
+    { id: "outstanding", label: "Outstanding", align: "right", minWidth: 115, render: (row) => <Box sx={numericCell}>{formatMoney(row.recordedOutstanding)}</Box> },
+    { id: "cost", label: "Cost", align: "right", minWidth: 90, render: (row) => <Box sx={numericCell}>{formatMoney(row.recordedCost)}</Box> },
+    { id: "net", label: "Net", align: "right", minWidth: 90, render: (row) => <Box sx={numericCell}>{formatMoney(row.recordedNet)}</Box> },
+  ];
+
   return (
-    <Card sx={{ height: "100%" }}>
+    <Card sx={{ height: "100%", overflow: "hidden" }}>
       <CardHeader title={title} slotProps={{ title: { variant: "h3", component: "h2" } }} sx={{ borderBottom: 1, borderColor: "divider" }} />
       {rows.length === 0 ? (
         <EmptyState title="No records" description="Nothing was recorded in this date range." />
       ) : (
-        <TableContainer>
-          <Table size="small" aria-label={title}>
-            <TableHead>
-              <TableRow>
-                <TableCell>{labelHeader}</TableCell>
-                <TableCell align="right">Appointments</TableCell>
-                <TableCell align="right">Amount</TableCell>
-                <TableCell align="right">Cash</TableCell>
-                <TableCell align="right">Card</TableCell>
-                <TableCell align="right">Collected</TableCell>
-                <TableCell align="right">Outstanding</TableCell>
-                <TableCell align="right">Cost</TableCell>
-                <TableCell align="right">Net</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.key}>
-                  <TableCell sx={{ fontWeight: 500 }}>{row.label}</TableCell>
-                  <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
-                    {row.records}
-                  </TableCell>
-                  <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
-                    {formatMoney(row.recordedAmount)}
-                  </TableCell>
-                  <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
-                    {formatMoney(row.recordedCash)}
-                  </TableCell>
-                  <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
-                    {formatMoney(row.recordedCard)}
-                  </TableCell>
-                  <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
-                    {formatMoney(row.recordedCollected)}
-                  </TableCell>
-                  <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
-                    {formatMoney(row.recordedOutstanding)}
-                  </TableCell>
-                  <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
-                    {formatMoney(row.recordedCost)}
-                  </TableCell>
-                  <TableCell align="right" sx={{ fontVariantNumeric: "tabular-nums" }}>
-                    {formatMoney(row.recordedNet)}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <DataTable
+          ariaLabel={title}
+          rows={rows}
+          columns={columns}
+          getRowId={(row) => row.key}
+          minWidth={925}
+          maxHeight={360}
+        />
       )}
     </Card>
   );
